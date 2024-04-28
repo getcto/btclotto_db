@@ -52,6 +52,7 @@ export class UserEntriesService {
       },
       by: ['userId'],
       _sum: {
+        total_ticket: true,
         total_amount: true
       },
       orderBy: {

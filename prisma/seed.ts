@@ -36,7 +36,7 @@ async function main() {
                 user: { connect: { id: 2 } },
                 sessionId: "2",
                 selected_number: "8",
-                total_ticket: "1",
+                total_ticket: 1,
                 total_amount: 0.1,
                 type: 'Super'
             },
