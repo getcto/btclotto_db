@@ -40,9 +40,9 @@ export class UsersService {
 
   }
 
-  async update(id: number, updateUserDto: Prisma.userUpdateInput) {
+  async update(walletAddress: string, updateUserDto: Prisma.userUpdateInput) {
     return await this.databaseService.user.update({
-      where: { id },
+      where: { wallet_address: walletAddress },
       data: updateUserDto,
     });
   }

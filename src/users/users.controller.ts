@@ -22,9 +22,9 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: Prisma.userUpdateInput) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch(':walletAddress')
+  update(@Param('walletAdress') walletAdress: string, @Body() updateUserDto: Prisma.userUpdateInput) {
+    return this.usersService.update(walletAdress, updateUserDto);
   }
 
   @Delete(':id')
