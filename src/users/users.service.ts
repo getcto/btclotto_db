@@ -28,16 +28,23 @@ export class UsersService {
       }
     }
   }
+  
+  async findOne(walletAddress: string) {
+    const user =  await this.databaseService.user.findUnique({
+      where: { 
+        wallet_address: walletAddress
+       },
+    });
+
+    if (!user) {
+      return { message: 'User not found' }
+    }
+
+    return { message: 'success', user }
+  }
 
   async findAll() {
     return await this.databaseService.user.findMany();
-  }
-
-  async findOne(id: number) {
-    return await this.databaseService.user.findUnique({
-      where: { id },
-    });
-
   }
 
   async update(walletAddress: string, updateUserDto: Prisma.userUpdateInput) {

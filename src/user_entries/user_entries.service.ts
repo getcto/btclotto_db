@@ -44,9 +44,7 @@ export class UserEntriesService {
   }
 
   async getTopEntries(sessionId: string) {
-    //sum up user entries amount and return top 10
-
-    return await this.databaseService.user_entries.groupBy({
+    const result =  await this.databaseService.user_entries.groupBy({
       where: {
         sessionId: sessionId
       },
@@ -62,5 +60,14 @@ export class UserEntriesService {
       },
       take: 10
     });
+
+    //return result with user data from user table
+
+
+    return {
+      message: 'success',
+      result
+    }
+
   }
 }
