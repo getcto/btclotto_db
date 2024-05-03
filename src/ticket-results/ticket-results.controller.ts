@@ -30,6 +30,11 @@ export class TicketResultsController {
     return await this.ticketResultsService.updateMillionTicketResult(sessionId);
   }
 
+  @Get('/get-normal-ticket/:sessionId')
+  async getNormalTicketResults(@Param('sessionId') sessionId: string) {
+    return await this.ticketResultsService.getNormalTicketResults(sessionId);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.ticketResultsService.findOne(+id);

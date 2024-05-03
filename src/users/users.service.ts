@@ -44,7 +44,17 @@ export class UsersService {
   }
 
   async findAll() {
-    return await this.databaseService.user.findMany();
+    const res = await this.databaseService.user.findMany();
+
+    try {
+      if (res.length === 0) {
+        return { message: 'No user found' }
+      }
+      return { message: 'success', res, total: res.length}
+    } 
+    catch (error) {
+      return { message: 'Error occured', error }
+    }
   }
 
   async update(walletAddress: string, updateUserDto: Prisma.userUpdateInput) {

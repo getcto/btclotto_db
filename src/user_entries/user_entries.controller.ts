@@ -22,6 +22,11 @@ export class UserEntriesController {
     return this.userEntriesService.findAll();
   }
 
+  @Get('/total-entries')
+  async getTotalEntries() {
+    return this.userEntriesService.getTotalEntries();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userEntriesService.findOne(+id);
@@ -37,5 +42,6 @@ export class UserEntriesController {
     return this.userEntriesService.remove(+id);
   }
 
-  
+ 
+
 }

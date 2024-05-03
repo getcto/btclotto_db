@@ -62,12 +62,20 @@ export class UserEntriesService {
     });
 
     //return result with user data from user table
-
-
     return {
       message: 'success',
       result
     }
+  }
 
+  async getTotalEntries() {
+    const res = await this.databaseService.user_entries.findMany();
+    const totalEntries = res.reduce((acc, curr) => {
+      acc.total_ticket += curr.total_ticket;
+      acc.total_amount += curr.total_amount;
+      return acc;
+    }, { total_ticket: 0, total_amount: 0 });
+
+    return totalEntries;
   }
 }

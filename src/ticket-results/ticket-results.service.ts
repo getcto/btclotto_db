@@ -35,6 +35,52 @@ export class TicketResultsService {
     };    
   }
 
+  async getNormalTicketResults(sessionId: string) {
+    const contractAddress = '0x52894C9deb7688ebb22b8507609C7e8179E72630';
+    const contractABI = [
+      'function dailySessionInfo(uint256 id) public view returns (uint256, uint256, uint256, uint256, bool)'
+    ];
+    const contract = new ethers.Contract(contractAddress, contractABI, this.provider());
+    const ticketResults = await contract.dailySessionInfo(
+      sessionId
+    );
+
+    //check if the sessionID is exist in the database
+    const checkSession = await this.databaseService.ticket_results.findUnique({
+      where: {
+        sessionId: sessionId, // Add the 'id' property with the value of sessionId
+      }
+    });
+
+    if (checkSession) {
+      throw new Error('Session ID already exists');
+    } else {
+      const ticketResult = await this.databaseService.ticket_results.create({
+        data: {
+          sessionId: sessionId,
+          type: 'normal', // Add the missing 'type' property
+          start_date: ticketResults[0].toString(),
+          end_date: ticketResults[1].toString(),
+          result: ticketResults[2].toString(),
+          total_amount: Number(ticketResults[3]),
+          total_entries: ticketResults[3].toString(),
+          isActive: ticketResults[4]
+        }
+      });
+
+      return {
+        startTime: ticketResults[0].toString(),
+        endTime: ticketResults[1].toString(),
+        result: ticketResults[2].toString(),
+        totalTicket: ticketResults[3].toString(),
+        isActive: ticketResults[4]
+      };   
+    }
+  
+    
+    
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} ticketResult`;
   }

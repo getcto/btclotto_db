@@ -25,10 +25,14 @@ model user {
 
 model ticket_results {
   id            Int      @id @default(autoincrement())
-  sessionId     String   
+  sessionId     String   @unique
   type          String
   total_entries String
   total_amount  Float
+  isActive      Boolean  @default(true)  // 0 = false, 1 = true
+  result        String? @default("0")
+  start_date    String?
+  end_date      String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
