@@ -17,22 +17,22 @@ export class TicketResultsService {
   // }
   
   async findAll() {
-    // get the function from the contract ABI with input parameters, in this case the ticket id is 1, and contractABI  retruns the result, totalTicket, isActive
-    const contractAddress = '0x52894C9deb7688ebb22b8507609C7e8179E72630';
-    const contractABI = [
-      'function megSessionInfo(uint256 id) public view returns (uint256, uint256, bool)'
-    ];
-    const contract = new ethers.Contract(contractAddress, contractABI, this.provider());
-    const ticketResults = await contract.megSessionInfo(
-      1
-    );
-    //return ticketResults with serialize BigInt to string
 
-    return {
-      totalTicket: ticketResults[0].toString(),
-      totalAmount: ticketResults[1].toString(),
-      isActive: ticketResults[2]
-    };    
+    const res = await this.databaseService.ticket_results.findMany({
+      orderBy: {
+        id: 'desc'
+      }
+    });
+
+    try {
+      if (res.length === 0) {
+        return { message: 'No ticket result found' }
+      }
+      return { message: 'success', res, total: res.length}
+    } 
+    catch (error) {
+      return { message: 'Error occured', error }
+    }
   }
 
   async getNormalTicketResults(sessionId: string) {

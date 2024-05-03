@@ -27,6 +27,11 @@ export class UserEntriesController {
     return this.userEntriesService.getTotalEntries();
   }
 
+  @Get('/history/:walletAddress')
+  async getHistoryByWalletAddress(@Param('walletAddress') walletAddress: string) {
+    return this.userEntriesService.getHistoryByWalletAddress(walletAddress);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userEntriesService.findOne(+id);

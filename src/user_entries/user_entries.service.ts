@@ -25,6 +25,36 @@ export class UserEntriesService {
     });
   }
 
+  async getHistoryByWalletAddress(walletAddress: string) {
+    if (!walletAddress || walletAddress === '') {
+      return { message: 'Wallet address is required' }
+    }
+
+    const user = await this.databaseService.user.findUnique({
+      where: {
+        wallet_address: walletAddress
+      }
+    });
+
+    const result = await this.databaseService.user_entries.findMany({
+      where: {
+        userId: user.id
+      },
+      orderBy: {
+        sessionId: 'desc'
+      }
+    });
+
+    if (result.length === 0) {
+      return { message: 'No history found' }
+    }
+
+    return {
+      message: 'success',
+      result
+    }
+  }
+
   update(id: number, updateUserEntryDto: Prisma.user_entriesUpdateInput) {
     return this.databaseService.user_entries.update({
       where: {
