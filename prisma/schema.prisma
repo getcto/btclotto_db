@@ -14,13 +14,14 @@ datasource db {
 }
 
 model user {
-  id             Int            @id @default(autoincrement())
-  username       String?         @unique
-  twitter_handle String?         @unique
-  wallet_address String         @unique
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  user_entries   user_entries[]
+  id                Int             @id @default(autoincrement())
+  username          String?         @unique
+  twitter_handle    String?         @unique
+  wallet_address    String          @unique
+  referral_address  String?       
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  user_entries      user_entries[]
 }
 
 model ticket_results {
@@ -46,6 +47,7 @@ model user_entries {
   total_ticket    Int
   total_amount    Float
   type            String
+  referral_address String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

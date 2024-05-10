@@ -12,12 +12,10 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  
-
   @Get(':id')
-  findOne(@Param('id') walletAdress: string) {
-    console.log("waaaa",walletAdress)
-    return this.usersService.findOne(walletAdress);
+  findOne(@Param('id') walletAddress: string) {
+    console.log("waaaa",walletAddress)
+    return this.usersService.findOne(walletAddress);
   }
 
   @Get()
@@ -26,8 +24,8 @@ export class UsersController {
   }
 
   @Patch(':id')
-  update(@Param('id') walletAdress: string, @Body() updateUserDto: Prisma.userUpdateInput) {
-    return this.usersService.update(walletAdress, updateUserDto);
+  update(@Param('id') walletAddress: string, @Body() updateUserDto: Prisma.userUpdateInput) {
+    return this.usersService.update(walletAddress, updateUserDto);
   }
 
   @Delete(':id')
