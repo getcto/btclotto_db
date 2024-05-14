@@ -23,6 +23,11 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @Post(':id')
+  async getReferral(@Param('id') walletAddress: string) {
+    return this.usersService.getReferral(walletAddress);
+  }
+
   @Patch(':id')
   update(@Param('id') walletAddress: string, @Body() updateUserDto: Prisma.userUpdateInput) {
     return this.usersService.update(walletAddress, updateUserDto);

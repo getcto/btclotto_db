@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -55,6 +55,20 @@ export class UsersService {
     catch (error) {
       return { message: 'Error occured', error }
     }
+  }
+
+  async getReferral(walletAddress: string) {
+    const referral = await this.databaseService.user.findMany({
+      where: {
+        referral_address: walletAddress
+      }
+    });
+
+    if (!referral) {
+      throw new NotFoundException('No referral found');
+    }
+
+    return { message: 'success', referral, total: referral.length}
   }
 
   async update(walletAddress: string, updateUserDto: Prisma.userUpdateInput) {

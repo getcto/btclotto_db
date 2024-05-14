@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -46,7 +46,7 @@ export class UserEntriesService {
     });
 
     if (result.length === 0) {
-      return { message: 'No history found' }
+      throw new NotFoundException('No data found');
     }
 
     return {
