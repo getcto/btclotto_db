@@ -1,44 +1,30 @@
-// import { ExtractJwt, Strategy } from 'passport-jwt';
-import { Strategy } from 'passport-twitter'
+import * as Strategy from 'passport-twitter-oauth2.0';
+
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { configService } from '../../config/config.service';
-import { IdentityService } from 'src/identity/identities.service';
-import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class TwitterStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    private identityService: IdentityService,
-    private jwtService: JwtService
-  ) {
-    super({ 
-      consumerKey: "1778367152585949184DragoOrbz",
-      consumerSecret: "**KGOmso",
-      callbackURL: configService.getProvider('twitter').callbackURL,
-      includeEmail: true
+  constructor(configService: ConfigService) {
+    const accessToken = Buffer.from(
+      `${configService.get('TWITTER_CLIENT_ID')}:${configService.get(
+        'TWITTER_CLIENT_SECRET',
+      )}`,
+    ).toString('base64');
+    super({
+      clientID: configService.get('TWITTER_CLIENT_ID'),
+      clientSecret: configService.get('TWITTER_CLIENT_SECRET'),
+      clientType: 'private',
+      callbackURL: configService.get('TWITTER_OAUTH2_CALLBACK_URL'),
+      scope: ['tweet.read', 'users.read', 'follows.write', 'offline.access'],
+      pkce: true,
+      state: true,
+      customHeaders: { Authorization: `Basic ${accessToken}` }, // https://github.com/florianmartens/passport-twitter-oauth2.0/issues/2.
     });
   }
 
-  async validate(token: string, secret: string, profile) {
-    const user = await this.identityService.create({
-      secret,
-      email: profile['_json'].email,
-      firstName: profile['_json'].name,
-      lastName: '',
-      nickName: profile['_json'].screen_name,
-      provider: 'twitter',
-      uid: token,
-      user: null
-    })
-  
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-
-    const payload = { id: user.id };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async validate(accessToken: string, refreshToken: string, profile: any) {
+    return { accessToken, refreshToken, ...profile };
   }
 }

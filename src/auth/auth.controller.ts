@@ -1,26 +1,51 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Controller, Get, Req, Res, UseFilters, UseGuards } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-import { AuthTwitterGuard } from './twitter/twitter.guard';
+import { AuthFilter } from './auth.filter';
+
+import { TwitterGuard } from './twitter/twitter.guard';
+
+import type { Request, Response } from 'express';
+
+const cookieSettings = {
+  httpOnly: true,
+  secure: true,
+};
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private configService: ConfigService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Get('twitter')
+  @UseGuards(TwitterGuard)
+  authTwitter(@Req() req: Request) {
+    return req.user;
   }
 
-  @UseGuards(AuthTwitterGuard)
-  @Get('auth/twitter/sign_in')
-  async twitterSignIn() {}
+  // TODO: fix user typings
+
+  @Get('twitter/callback')
+  @UseGuards(TwitterGuard)
+  @UseFilters(AuthFilter)
+  authTwitterCallback(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    res.cookie('twitter.accessToken', (req.user as any).accessToken, cookieSettings);
+    // TODO: handle refresh token...
+    res.cookie('twitter.refreshToken', (req.user as any).refreshToken, cookieSettings);
+    res.cookie('twitter.id', (req.user as any).id, cookieSettings);
+    res.cookie('twitter.name', (req.user as any).name, cookieSettings);
+    res.cookie('twitter.username', (req.user as any).username, cookieSettings);
+    res.redirect(`${this.configService.get('WEBAPP_URL')}/connect`);
+  }
+
   
-  @UseGuards(AuthTwitterGuard)
-  @Get('auth/twitter/callback')
-  async twitterSigninCallback(@Request() req): Promise<any> {
-    return req.user
+
+  @Get('disconnect')
+  disconnect(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('twitter.accessToken', cookieSettings);
+    res.clearCookie('twitter.refreshToken', cookieSettings);
+    res.clearCookie('twitter.id', cookieSettings);
+    res.clearCookie('twitter.name', cookieSettings);
+    res.clearCookie('twitter.username', cookieSettings);
+    res.redirect(this.configService.get('WEBAPP_URL'));
   }
 }

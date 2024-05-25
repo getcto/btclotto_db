@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+
 import { AuthController } from './auth.controller';
 
+import { TwitterAuthModule } from './twitter/twitter.module';
+
 @Module({
+  imports: [PassportModule, TwitterAuthModule],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [ConfigService],
 })
 export class AuthModule {}
