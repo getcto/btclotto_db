@@ -24,17 +24,27 @@ export class AuthController {
 
   // TODO: fix user typings
 
+  // @Get('twitter/callback')
+  // @UseGuards(TwitterGuard)
+  // @UseFilters(AuthFilter)
+  // authTwitterCallback(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+  //   res.cookie('twitter.accessToken', (req.user as any).accessToken, cookieSettings);
+  //   // TODO: handle refresh token...
+  //   res.cookie('twitter.refreshToken', (req.user as any).refreshToken, cookieSettings);
+  //   res.cookie('twitter.id', (req.user as any).id, cookieSettings);
+  //   res.cookie('twitter.name', (req.user as any).name, cookieSettings);
+  //   res.cookie('twitter.username', (req.user as any).username, cookieSettings);
+  //   res.redirect(`${this.configService.get('WEBAPP_URL')}/connect`);
+  // }
+
   @Get('twitter/callback')
   @UseGuards(TwitterGuard)
-  @UseFilters(AuthFilter)
-  authTwitterCallback(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
-    res.cookie('twitter.accessToken', (req.user as any).accessToken, cookieSettings);
-    // TODO: handle refresh token...
-    res.cookie('twitter.refreshToken', (req.user as any).refreshToken, cookieSettings);
-    res.cookie('twitter.id', (req.user as any).id, cookieSettings);
-    res.cookie('twitter.name', (req.user as any).name, cookieSettings);
-    res.cookie('twitter.username', (req.user as any).username, cookieSettings);
-    res.redirect(`${this.configService.get('WEBAPP_URL')}/connect`);
+  async twitterAuthCallback(@Req() req, @Res() res) {
+    // Handles the Twitter OAuth callback
+    const user = req.user;
+    res.json(user);
+    // Optionally, redirect to your frontend application
+    // res.redirect('/');
   }
 
   
