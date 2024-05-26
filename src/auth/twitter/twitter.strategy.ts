@@ -30,7 +30,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy) {
   // }
 
   async validate(token: string, tokenSecret: string, profile: any) {
-    const { username, displayName, photos } = profile;
+    const { username, displayName, profile_image_url } = profile;
     console.log("PROFILE!!" ,profile);
     // Extract the profile picture URL (the first photo in the array)
     // const profilePicture = photos[0]?.value;
@@ -38,8 +38,7 @@ export class TwitterStrategy extends PassportStrategy(Strategy) {
     // You can then pass these to your auth service or directly return them
     const user = await this.authService.validateUser({
       username,
-      displayName,
-      // profilePicture,
+      profile_image_url,
     });
 
     return user;
