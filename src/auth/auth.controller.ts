@@ -44,7 +44,9 @@ export class AuthController {
     // const user = req.user;
     // res.json(user);
     // Optionally, redirect to your frontend application
-    return res.redirect('https://test.dragoorbz.com/profile');
+    res.cookie('twitter.username', req.user.username, cookieSettings);
+    res.cookie('twitter.profile_image_url', req.user.profile_image_url, cookieSettings);
+    res.redirect('https://test.dragoorbz.com/profile');
   }
 
   
