@@ -44,7 +44,7 @@ export class AuthController {
     const user = req.user;
     res.json(user);
     // Optionally, redirect to your frontend application
-    // res.redirect('/');
+    res.redirect('https://test.dragoorbz.com/profile');
   }
 
   
