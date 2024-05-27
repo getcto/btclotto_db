@@ -41,8 +41,8 @@ export class AuthController {
   @UseGuards(TwitterGuard)
   async twitterAuthCallback(@Req() req, @Res() res) {
     // Handles the Twitter OAuth callback
-    const user = req.user;
-    res.json(user);
+    // const user = req.user;
+    // res.json(user);
     // Optionally, redirect to your frontend application
     return res.redirect('https://test.dragoorbz.com/profile');
   }
