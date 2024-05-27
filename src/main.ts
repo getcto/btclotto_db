@@ -6,9 +6,10 @@ import * as passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   app.use(
     session({
-      secret: 'yourSecretKey', // Replace with a strong secret key
+      secret: 'dragoorbz', // Replace with a strong secret key
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -19,7 +20,6 @@ async function bootstrap() {
 
   app.use(passport.initialize());
   app.use(passport.session());
-  app.enableCors();
   await app.listen(3001);
 }
 bootstrap();
