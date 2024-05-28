@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 
 @Controller('users')
@@ -28,9 +29,9 @@ export class UsersController {
     return this.usersService.getReferral(walletAddress);
   }
 
-  @Patch(':id')
-  update(@Param('id') walletAddress: string, @Body() updateUserDto: Prisma.userUpdateInput) {
-    return this.usersService.update(walletAddress, updateUserDto);
+  @Patch()
+  update(@Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(updateUserDto);
   }
 
   @Delete(':id')

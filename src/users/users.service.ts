@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 
 @Injectable()
@@ -71,10 +72,14 @@ export class UsersService {
     return { message: 'success', referral, total: referral.length}
   }
 
-  async update(walletAddress: string, updateUserDto: Prisma.userUpdateInput) {
+  async update(updateUserDto: UpdateUserDto) {
+    const { walletAddress, twitter_handle, twitter_pic } = updateUserDto;
     return await this.databaseService.user.update({
       where: { wallet_address: walletAddress },
-      data: updateUserDto,
+      data: {
+        twitter_handle,
+        twitter_pic
+      },
     });
   }
 

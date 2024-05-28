@@ -31,7 +31,6 @@ export class TwitterStrategy extends PassportStrategy(Strategy) {
 
   async validate(token: string, tokenSecret: string, profile: any) {
     const { username, displayName, profile_image_url } = profile;
-    console.log("PROFILE!!" ,profile);
     // Extract the profile picture URL (the first photo in the array)
     // const profilePicture = photos[0]?.value;
 

@@ -46,7 +46,7 @@ export class AuthController {
     // Optionally, redirect to your frontend application
     res.cookie('twitter.username', (req.user).username, cookieSettings);
     res.cookie('twitter.profile_image_url', (req.user).profile_image_url, cookieSettings);
-    res.redirect(`https://test.dragoorbz.com/profile?${(req.user).username}&${(req.user).profile_image_url}`);
+    res.redirect(`https://test.dragoorbz.com/profile?$username={(req.user).username}&pic=${(req.user).profile_image_url}`);
   }
 
   
@@ -60,4 +60,5 @@ export class AuthController {
     res.clearCookie('twitter.username', cookieSettings);
     res.redirect(this.configService.get('WEBAPP_URL'));
   }
+
 }
