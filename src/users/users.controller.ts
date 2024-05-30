@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Prisma } from '@prisma/client';
 import { UpdateUserDto } from './dto/updateUser.dto';
@@ -29,7 +29,7 @@ export class UsersController {
     return this.usersService.getReferral(walletAddress);
   }
 
-  @Patch()
+  @Put()
   update(@Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(updateUserDto);
   }
