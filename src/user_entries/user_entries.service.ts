@@ -80,7 +80,7 @@ export class UserEntriesService {
       },
       by: ['userId'],
       _sum: {
-        total_ticket: true,
+        // total_ticket: true,
         total_amount: true
       },
       orderBy: {
@@ -101,7 +101,7 @@ export class UserEntriesService {
   async getTotalEntries() {
     const res = await this.databaseService.user_entries.findMany();
     const totalEntries = res.reduce((acc, curr) => {
-      acc.total_ticket += curr.total_ticket;
+      // acc.total_ticket += curr.total_ticket;
       acc.total_amount += curr.total_amount;
       return acc;
     }, { total_ticket: 0, total_amount: 0 });

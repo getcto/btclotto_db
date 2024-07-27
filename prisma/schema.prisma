@@ -45,7 +45,7 @@ model user_entries {
   userId          Int
   sessionId       String   
   selected_number String
-  total_ticket    Int
+  total_ticket    String
   total_amount    Float
   type            String
   referral_address String?
