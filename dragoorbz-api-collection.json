@@ -1,0 +1,293 @@
+{
+  "info": {
+    "name": "DragoorBz API",
+    "description": "API collection for DragoorBz application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Twitter Auth",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/twitter",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "twitter"]
+            }
+          }
+        },
+        {
+          "name": "Twitter Callback",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/twitter/callback",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "twitter", "callback"]
+            }
+          }
+        },
+        {
+          "name": "Disconnect",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/disconnect",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "disconnect"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"wallet_address\": \"string\",\n  \"referral_address\": \"string\",\n  \"twitter_handle\": \"string\",\n  \"twitter_pic\": \"string\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/:walletAddress",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", ":walletAddress"],
+              "variable": [
+                {
+                  "key": "walletAddress",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"walletAddress\": \"string\",\n  \"twitter_handle\": \"string\",\n  \"twitter_pic\": \"string\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ticket Results",
+      "item": [
+        {
+          "name": "Get All Ticket Results",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ticket-results",
+              "host": ["{{baseUrl}}"],
+              "path": ["ticket-results"]
+            }
+          }
+        },
+        {
+          "name": "Update Mega Ticket Result",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ticket-results/mega",
+              "host": ["{{baseUrl}}"],
+              "path": ["ticket-results", "mega"]
+            }
+          }
+        },
+        {
+          "name": "Update Million Ticket Result",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ticket-results/million",
+              "host": ["{{baseUrl}}"],
+              "path": ["ticket-results", "million"]
+            }
+          }
+        },
+        {
+          "name": "Get Normal Ticket Results",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ticket-results/get-normal-ticket/:sessionId",
+              "host": ["{{baseUrl}}"],
+              "path": ["ticket-results", "get-normal-ticket", ":sessionId"],
+              "variable": [
+                {
+                  "key": "sessionId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Entries",
+      "item": [
+        {
+          "name": "Create User Entry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/user-entries",
+              "host": ["{{baseUrl}}"],
+              "path": ["user-entries"]
+            }
+          }
+        },
+        {
+          "name": "Get Top Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user-entries/top-entries/:sessionId",
+              "host": ["{{baseUrl}}"],
+              "path": ["user-entries", "top-entries", ":sessionId"],
+              "variable": [
+                {
+                  "key": "sessionId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user-entries",
+              "host": ["{{baseUrl}}"],
+              "path": ["user-entries"]
+            }
+          }
+        },
+        {
+          "name": "Get Total Entries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user-entries/total-entries",
+              "host": ["{{baseUrl}}"],
+              "path": ["user-entries", "total-entries"]
+            }
+          }
+        },
+        {
+          "name": "Get User History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/user-entries/history/:walletAddress",
+              "host": ["{{baseUrl}}"],
+              "path": ["user-entries", "history", ":walletAddress"],
+              "variable": [
+                {
+                  "key": "walletAddress",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ]
+} 
