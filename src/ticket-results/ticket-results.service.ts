@@ -36,7 +36,7 @@ export class TicketResultsService {
   }
 
   async getNormalTicketResults(sessionId: string) {
-    const contractAddress = '0x52894C9deb7688ebb22b8507609C7e8179E72630';
+    const contractAddress = '0x73B19f510fdA3c9Ee796C69671841D06fb3d28Ea';
     const contractABI = [
       'function dailySessionInfo(uint256 id) public view returns (uint256, uint256, uint256, uint256, bool)'
     ];
@@ -94,7 +94,7 @@ export class TicketResultsService {
   }
 
   async updateMegaTicketResult(sessionId: number) {
-    const contractAddress = '0x52894C9deb7688ebb22b8507609C7e8179E72630';
+    const contractAddress = '0x73B19f510fdA3c9Ee796C69671841D06fb3d28Ea';
     const contractABI = [
       'function megSessionInfo(uint256 id) public view returns (uint256, uint256, bool)'
     ];
@@ -119,7 +119,7 @@ export class TicketResultsService {
   }
 
   async updateMillionTicketResult(sessionId: number) {
-    const contractAddress = '0x52894C9deb7688ebb22b8507609C7e8179E72630';
+    const contractAddress = '0x73B19f510fdA3c9Ee796C69671841D06fb3d28Ea';
     const contractABI = [
       'function milSessionInfo(uint256 id) public view returns (uint256, uint256, bool)'
     ];
